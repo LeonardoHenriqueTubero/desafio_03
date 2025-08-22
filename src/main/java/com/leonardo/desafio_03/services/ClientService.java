@@ -32,9 +32,17 @@ public class ClientService {
         return result.map(ClientDTO::new);
     }
 
+    @Transactional
+    public ClientDTO insert(ClientDTO dto) {
+        Client client = new Client();
+        dtoToEntity(client, dto);
+        client = repository.save(client);
+        return new ClientDTO(client);
+    }
+
     private void dtoToEntity(Client entity, ClientDTO dto) {
         entity.setName(dto.getName());
-        entity.setCPF(dto.getCPF());
+        entity.setCpf(dto.getCpf());
         entity.setIncome(dto.getIncome());
         entity.setBirthDate(dto.getBirthDate());
         entity.setChildren(dto.getChildren());
